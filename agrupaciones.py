@@ -15,6 +15,8 @@ chipo = pd.read_csv(url, sep='\t')
 print('Imprime sólo los 10 primeros resultados')
 print(chipo.head(10))
 
+print(chipo[['item_name', 'quantity']])
+
 # 4.- Imprime el número de resultados disponibles (filas)
 
 print('\nImprime el número de resultados disponibles (filas)', chipo.shape[0])
@@ -23,11 +25,15 @@ print('\nImprime el número de resultados disponibles (filas)', chipo.shape[0])
 
 print('\nImprime el número de resultados disponibles (columnas)', chipo.shape[1])
 
+filas, columnas = chipo.shape
+
+print('\n Filas:', filas, 'columnas:', columnas)
+
 # 6.- Imprime el nombre de cada columna
 
 print('\nImprime el nombre de cada columna')
-print(chipo.columns
-      )
+print(chipo.columns)
+
 # 7.- ¿Cómo se indexa el dataset?
 
 print('\n¿Cómo se indexa el dataset?')
@@ -62,17 +68,18 @@ chipo.item_price = chipo.item_price.apply(dollarizer)
 
 # 13.- ¿Cuantos ingresos se han tenido en total?
 
-total = chipo.quantity * chipo.item_price
+total = chipo.quantity * chipo['item_price']
 
 print('¿Cuantos ingresos se han tenido en total?', total.sum())
 
 # 14.- ¿Cuántos pedidos se han hecho en total?
 
-print('¿Cuántos pedidos se han hecho en total?', chipo.groupby('order_id').count().shape[0])
+items = chipo.groupby('order_id').count()
+print('¿Cuántos pedidos se han hecho en total?', items.shape[0])
 
 # 15.- ¿Cuánta es la cantidad promedio por pedido?
 
-print('¿Cuánta es la cantidad promedio por pedido?', chipo.groupby('order_id').sum().mean()['quantity'])
+print('¿Cuánta es la cantidad promedio por pedido?', chipo.groupby('order_id').sum().mean().quantity)
 
 # 16.- ¿Cuántos items diferentes se han pedido?
 
