@@ -13,6 +13,8 @@ iris = pd.read_csv('./csv/iris.data.csv', header=None)
 print('\nForma del conjunto de datos: ',iris.shape)
 
 print(iris.axes)
+print(iris.columns)
+print(iris[4].value_counts(normalize=True))
 
 tag = iris.groupby(4).count()
 
