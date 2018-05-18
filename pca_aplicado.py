@@ -6,7 +6,6 @@
 #               http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html
 
 from sklearn import datasets
-import mglearn
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn import metrics
@@ -26,17 +25,7 @@ transformada = pca.transform(digits.data)
 print(digits.data.shape)
 
 print(transformada.data.shape)
-"""
-def es_par(x):from sklearn import metrics
-    if x%2==0:
-        return 1
-    else:
-        return 0
 
-paronon = [es_par(x) for x in digits.target]
-
-mglearn.discrete_scatter(transformada[:,0], transformada[:,1], paronon)
-"""
 # 4.- Aplica un algortimo de clasificación tras la transformación con los datos de etiquetas originales
 
 
