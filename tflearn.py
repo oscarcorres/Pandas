@@ -4,8 +4,8 @@
 # Carga los datos de cancer de sklearn
 
 from sklearn import datasets
-from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPClassifier
+import numpy as np
+import tflearn
 
 cancer=datasets.load_breast_cancer()
 X=cancer.data
@@ -13,19 +13,20 @@ Y=cancer.target
 
 # Crea una red neuronal MLPC
 
-X_train, X_test, Y_train, Y_test= train_test_split(X,Y,random_state=2)
+# Build neural network
+net = tflearn.input_data(shape=[None, 6])
+net = tflearn.fully_connected(net, 16)
+net = tflearn.fully_connected(net, 8)
+net = tflearn.fully_connected(net, 2, activation='softmax')
+net = tflearn.regression(net)
 
-red=MLPClassifier(max_iter=1500, hidden_layer_sizes=(3,13), activation="logistic",
-                  solver="lbfgs", shuffle=False, random_state=2)
-
-ret=red.fit(X_train,Y_train)
-print(ret)
-score=red.score(X_test, Y_test)
-
-print("Score:",score)
+# Define model
+model = tflearn.DNN(net)
+# Start training (apply gradient descent algorithm)
+model.fit(X, Y, n_epoch=50, batch_size=16, show_metric=True)
 
 # Intenta obtener el mejor resultado posible de predicción
-
+"""
 mejor = 0
 for activacion in ('identity', 'logistic', 'tanh', 'relu'):
     print ('Activacion',activacion)
@@ -42,4 +43,4 @@ for activacion in ('identity', 'logistic', 'tanh', 'relu'):
                     mejorcon = (capa,neuronas,solver,activacion)
 
 print("Score:",mejor,"con",mejorcon[0],"capas y",mejorcon[1],"neuronas, solver", mejorcon[2], 'y activacion', mejorcon[3])
-
+"""
